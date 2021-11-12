@@ -94,3 +94,6 @@
                 call printf
                 popl %ebx
                 popl %ebx
+                movl $1, %eax
+                xorl %ebx, %ebx
+                int $0x80
