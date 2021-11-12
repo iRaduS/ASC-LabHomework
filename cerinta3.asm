@@ -30,7 +30,7 @@
 
     reset:  cmp $26, %ecx
             je begin
-            movl $256, (%edi, %ecx, 1)
+            movl $256, (%edi, %ecx, 4)
             incl %ecx
             jmp reset
 	
