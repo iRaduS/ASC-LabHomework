@@ -63,6 +63,9 @@
                         cmp $100, %al
                         je div_operation
 
+                        pushl $0
+                        jmp for
+
     add_operation:  popl %eax
                     popl %ebx
                     add %eax, %ebx

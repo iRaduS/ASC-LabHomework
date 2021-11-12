@@ -10,7 +10,10 @@
     .global main
 
     main:   movl $vars, %edi
-            pushl $str
+            xorl %ecx, %ecx
+            jmp reset
+
+    begin:  pushl $str
             call gets
             popl %ebx
             pushl $chDelim
@@ -23,7 +26,13 @@
             call atoi
             popl %ebx
             cmp $0, %eax
-            je check_var 
+            je check_var
+
+    reset:  cmp $26, %ecx
+            je begin
+            movl $256, (%edi, %ecx, 1)
+            incl %ecx
+            jmp reset
 	
     et_for: pushl $chDelim
             pushl $0
@@ -35,6 +44,13 @@
             je exit
             
             movl %eax, res
+
+            movl res, %esi
+            xorl %ecx, %ecx
+            movb (%esi, %ecx, 1), %al
+
+            cmp $48, %al
+            je add_zero_stack
 
             pushl res
             call atoi
@@ -58,15 +74,18 @@
                 movb (%esi, %ecx, 1), %al
                 movb %al, aux
 
-                test:movl aux, %ecx
+                movl aux, %ecx
                 sub $97, %ecx
                 movl (%edi, %ecx, 4), %eax
                 
-                cmp $0, %eax
+                cmp $256, %eax
                 jne add_aux_stack
 
                 push aux
                 jmp et_for
+
+    add_zero_stack:     pushl $0
+                        jmp et_for
 
     add_aux_stack:	movl %eax, aux
                     pushl aux
@@ -101,8 +120,6 @@
                     popl %ebx
                     sub $97, %ebx
                     movl %eax, (%edi, %ebx, 4)
-                    movl (%edi, %ebx, 4), %eax
-                    pushl %eax
                     jmp et_for
 
     sub_operation:  popl %ebx
