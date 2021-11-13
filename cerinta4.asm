@@ -148,7 +148,7 @@
 
                                                         movl columnIndex, %eax
                                                         movl $0, %edx
-                                                        mull n
+                                                        mull m
                                                         addl m, %eax
                                                         subl lineIndex, %eax
                                                         subl $1, %eax
@@ -161,12 +161,7 @@
                     rotate_cont:    incl lineIndex
                                     jmp for_rotate_lines
 
-    show_result:    movl n, %eax
-                    movl m, %ebx
-                    movl %eax, m
-                    movl %ebx, n
-
-                    pushl m
+    show_result:    pushl n
                     pushl $formatPrintf
                     call printf
                     popl %ebx
@@ -176,7 +171,7 @@
                     call fflush
                     popl %ebx
 
-                    pushl n
+                    pushl m
                     pushl $formatPrintf
                     call printf
                     popl %ebx
@@ -189,12 +184,12 @@
                     lea a, %edi
                     movl $0, lineIndex
                     for_show_lines: movl lineIndex, %ecx
-                                    cmp %ecx, m
+                                    cmp %ecx, n
                                     je et_op_exit
 
                                     movl $0, columnIndex
                                     for_show_columns:   movl columnIndex, %ecx
-                                                        cmp %ecx, n
+                                                        cmp %ecx, m
                                                         je show_cont
 
                                                         movl lineIndex, %eax
