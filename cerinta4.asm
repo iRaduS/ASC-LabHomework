@@ -244,6 +244,7 @@
                     lea a, %esi
                     movl (%esi, %ecx, 4), %eax
                     movl $0, %edx
+                    cdq
                     idivl operand
                     movl %eax, (%esi, %ecx, 4)
 
