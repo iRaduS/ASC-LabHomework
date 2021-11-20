@@ -27,6 +27,8 @@
             popl %ebx
             cmp $0, %eax
             je check_var
+            pushl %eax
+            jmp et_for
 
     reset:  cmp $26, %ecx
             je begin
@@ -130,6 +132,7 @@
 
     mul_operation:  popl %ebx
                     popl %eax
+                    xorl %edx, %edx
                     mul %ebx
                     pushl %eax
                     jmp et_for
