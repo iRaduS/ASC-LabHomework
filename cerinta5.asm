@@ -30,6 +30,7 @@
 
 		movl %eax, start
 		###################
+	OK_set_stop: 
 		movl 12(%ebp), %eax
 		addl m, %eax
 
@@ -75,7 +76,7 @@
 						ret
 
 	Ok_set_start_zero: 	movl $0, start
-						jmp Ok_continue
+						jmp OK_set_stop
 
 	Ok_set_stop_sub: 	movl subTriple, %eax
 						movl %eax, stop
